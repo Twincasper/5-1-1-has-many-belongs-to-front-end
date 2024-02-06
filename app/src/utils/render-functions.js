@@ -1,63 +1,62 @@
-import { Author } from "../models/has-many.js";
+import { Village } from "../models/has-many.js";
 
 export const renderMain = () => {
   const form = document.querySelector('#app');
-  const authorSection = document.createElement('div');
+  const ninjaSection = document.createElement('div');
 
-  authorSection.innerHTML = `
-      <h2>Add Author</h2>
-      <form id="author-form">
-          <label for="author-name">Author Name:</label>
-          <input type="text" name='name' id="author-name" required>
-          <button type="submit">Add Author</button>
+  ninjaSection.innerHTML = `
+      <h2>Add Ninja</h2>
+      <form id="ninja-form">
+          <label for="ninja-name">Ninja Name:</label>
+          <input type="text" name='name' id="ninja-name" required>
+          <label for="ninja-rank">Ninja Rank:</label>
+          <input type="text" name='rank' id="ninja-rank" required>
+          <button type="submit">Add Ninja</button>
       </form>
   `;
-  // form.append(authorSection);
 
-  const bookSection = document.createElement('div');
-  bookSection.id = 'bookForm';
-  bookSection.innerHTML = `
-  <h2>Add Book</h2>
-  <form id="book-form">
-      <label for="authors">Select Author:</label>
-      <select id="authors" name="name" required>
-          ${Author.getAllAuthors().map(author => `<option value="${author.name}">${author.name}</option>`).join('')}
-      </select>
-      <label for="book-title">Book Title:</label>
-      <input type="text" name="title" id="book-title" required>
-      <button type="submit">Add Book</button>
+  const villageSection = document.createElement('div');
+  villageSection.id = 'villageForm';
+  villageSection.innerHTML = `
+  <h2>Add Village</h2>
+  <form id="village-form">
+      <label for="village-name">Village Name:</label>
+      <input type="text" name='name' id="village-name" required>
+      <label for="village-residents">Number of Residents:</label>
+      <input type="number" name='residents' id="village-residents" required>
+      <label for="village-kage">Kage:</label>
+      <input type="text" name='kage' id="village-kage" required>
+      <button type="submit">Add Village</button>
   </form>
   `;
-  form.append(authorSection, bookSection);
+  form.append(ninjaSection, villageSection);
 };
 
-export const renderAuthor = (author) => {
-  const authorElement = document.createElement('div');
-  authorElement.id = `authorNum${author.id}`;
+
+export const renderVillage = (village) => {
+  const villageElement = document.createElement('div');
 
   const h3 = document.createElement('h3');
-  h3.textContent = author.name;
+  h3.textContent = village.name;
 
   const ul = document.createElement('ul');
-  ul.id = `authorUL${author.id}`;
-  console.log(author.id, author);
-  ul.innerHTML = renderBooks(author.name);
+  ul.innerHTML = renderNinjas(village);
 
-  authorElement.append(h3, ul);
+  villageElement.append(h3, ul);
 
-  document.querySelector('#app').append(authorElement);
-};
-export const findAuthorHelper = (authorName) => {
-  return Author.getAllAuthors().filter((el) => el.name === authorName)
-}
-export const renderBooks = (authorName) => {
-  const thisAuthor = findAuthorHelper(authorName);
-  const books = thisAuthor[0].getBooks();
-  return books[0] ? books.map((book) => `<li>${book.title}</li>`).join('') : 'No books have been added for this author.'
+  document.querySelector('#app').append(villageElement);
 };
 
-export const updateDropDown = () =>{
-  document.querySelector('#authors').innerHTML = `
-  ${Author.getAllAuthors().map(author => `<option value="${author.name}">${author.name}</option>`).join('')}
-  `
-}
+export const findVillageHelper = (villageName) => {
+  return Village.allVillages.find(village => village.name === villageName);
+};
+
+export const renderNinjas = (village) => {
+  const ninjas = village.ninjas;
+  return ninjas.length > 0 ? ninjas.map(ninja => `<li>${ninja.name} - ${ninja.rank}</li>`).join('') : 'No ninjas in this village.';
+};
+
+export const updateDropDown = () => {
+  const selectElement = document.querySelector('#villages');
+  selectElement.innerHTML = Village.allVillages.map(village => `<option value="${village.name}">${village.name}</option>`).join('');
+};

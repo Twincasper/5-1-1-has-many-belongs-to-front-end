@@ -1,30 +1,36 @@
-import './style.css'
-import { renderMain, renderBooks, renderAuthor, updateDropDown, findAuthorHelper} from './utils/render-functions.js';
-import { Author } from './models/has-many.js';
+// main.js
+import './style.css';
+import { renderMain, renderVillage, updateDropDown, findVillageHelper, renderNinjas } from './utils/render-functions.js';
+import { Village } from './models/has-many.js';
 
-const handleAuthorSubmit = (e) => {
+const handleVillageSubmit = (e) => {
   e.preventDefault();
-  const newAuthor = Object.fromEntries(new FormData(e.target));
-  const author = new Author(newAuthor.name);
-  renderAuthor(author);
+  const newVillage = Object.fromEntries(new FormData(e.target));
+  const village = new Village(newVillage.name, newVillage.residents, newVillage.kage);
+  renderVillage(village);
   updateDropDown();
   e.target.reset();
-}
+};
 
-const handleBookSubmit = (e) => {
+const handleNinjaSubmit = (e) => {
   e.preventDefault();
-  const authorAndBook = Object.fromEntries(new FormData(e.target));
-  const author = findAuthorHelper(authorAndBook.name);
-  author[0].addBook(authorAndBook.title, authorAndBook.name);
-  document.querySelector(`#authorUL${author[0].id}`).innerHTML = renderBooks(authorAndBook.name);
-  e.target.reset();
-}
+  const villageName = e.target.elements['village'].value;
+  const village = findVillageHelper(villageName);
+  if (village) {
+    const newNinja = Object.fromEntries(new FormData(e.target));
+    village.addNinja(newNinja.name, newNinja.rank);
+    document.querySelector(`#villageUL${villageName}`).innerHTML = renderNinjas(village);
+    e.target.reset();
+  } else {
+    console.log('Village not found.');
+  }
+};
 
 const main = () => {
   renderMain();
 
-  document.getElementById('author-form').addEventListener('submit', handleAuthorSubmit);
-  document.getElementById('book-form').addEventListener('submit', handleBookSubmit);
-}
+  document.getElementById('village-form').addEventListener('submit', handleVillageSubmit);
+  document.getElementById('ninja-form').addEventListener('submit', handleNinjaSubmit);
+};
 
 main();
