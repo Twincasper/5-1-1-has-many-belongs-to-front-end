@@ -19,7 +19,6 @@ export const renderMain = () => {
     </form>
 `;
 
-
   const villageSection = document.createElement('div');
   villageSection.id = 'villageForm';
   villageSection.innerHTML = `
@@ -36,7 +35,6 @@ export const renderMain = () => {
   `;
   form.append(ninjaSection, villageSection);
 };
-
 
 export const renderVillage = (village) => {
   const villageElement = document.createElement('div');
