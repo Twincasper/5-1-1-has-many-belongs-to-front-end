@@ -5,15 +5,20 @@ export const renderMain = () => {
   const ninjaSection = document.createElement('div');
 
   ninjaSection.innerHTML = `
-      <h2>Add Ninja</h2>
-      <form id="ninja-form">
-          <label for="ninja-name">Ninja Name:</label>
-          <input type="text" name='name' id="ninja-name" required>
-          <label for="ninja-rank">Ninja Rank:</label>
-          <input type="text" name='rank' id="ninja-rank" required>
-          <button type="submit">Add Ninja</button>
-      </form>
-  `;
+    <h2>Add Ninja</h2>
+    <form id="ninja-form">
+        <label for="ninja-name">Ninja Name:</label>
+        <input type="text" name='name' id="ninja-name" required>
+        <label for="ninja-rank">Ninja Rank:</label>
+        <input type="text" name='rank' id="ninja-rank" required>
+        <label for="ninja-village">Village:</label>
+        <input type="text" name='village' id="ninja-village" required>
+        <label for="ninja-jutsus">Jutsus:</label>
+        <input type="text" name='jutsus' id="ninja-jutsus" required>
+        <button type="submit">Add Ninja</button>
+    </form>
+`;
+
 
   const villageSection = document.createElement('div');
   villageSection.id = 'villageForm';
