@@ -72,4 +72,12 @@ export class Village {
   static beginChuninExams() {
     console.log("Chunin Exams have begun across all villages.");
   }
+
+  static getAllVillages() {
+    return [...Village.#allVillages];
+  }
+
+  getAllNinjas() {
+    return [...this.#ninjas];
+  }
 }

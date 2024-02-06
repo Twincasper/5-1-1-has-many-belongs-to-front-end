@@ -1,6 +1,6 @@
 // main.js
 import './style.css';
-import { renderMain, renderVillage, updateDropDown, findVillageHelper, renderNinjas } from './utils/render-functions.js';
+import { renderMain, renderVillage, updateDropDown, findVillageHelper, renderNinjas, } from './utils/render-functions.js';
 import { Village } from './models/has-many.js';
 
 const handleVillageSubmit = (e) => {
@@ -14,17 +14,18 @@ const handleVillageSubmit = (e) => {
 
 const handleNinjaSubmit = (e) => {
   e.preventDefault();
-  const villageName = e.target.elements['village'].value;
+  const villageName = document.querySelector('#village-dropdown').value;
   const village = findVillageHelper(villageName);
   if (village) {
     const newNinja = Object.fromEntries(new FormData(e.target));
     village.addNinja(newNinja.name, newNinja.rank);
-    document.querySelector(`#villageUL${villageName}`).innerHTML = renderNinjas(village);
+    renderVillage(village);
     e.target.reset();
   } else {
     console.log('Village not found.');
   }
 };
+
 
 const main = () => {
   renderMain();
